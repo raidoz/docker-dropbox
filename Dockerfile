@@ -11,6 +11,8 @@ RUN echo 'deb http://linux.dropbox.com/debian buster main' > /etc/apt/sources.li
 	&& apt-get -qqy update \
 	# Note 'ca-certificates' dependency is required for 'dropbox start -i' to succeed
 	&& apt-get -qqy install ca-certificates curl python3-gpg dropbox \
+	# Install packages to get libglapi.so.0, which now seems mandatory, but not listed in deps
+	&& apt-get -qyy install libglapi-mesa libxdamage1 libxfixes3 libxcb-glx0 libxcb-dri2-0 libxcb-dri3-0 libxcb-present0 libxcb-sync1 libxshmfence1 libxxf86vm1 \
 	# Perform image clean up.
 	&& apt-get -qqy autoclean \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
